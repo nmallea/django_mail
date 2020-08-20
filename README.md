@@ -6,3 +6,5 @@ Requirements
 Django 3.0.8
 markdown2 2.3.9
 
+Original repository: https://github.com/nmallea/CS50_Wiki
+
