@@ -1,7 +1,8 @@
-# Harvard CS50
+# Harvard CS50 -- Wiki Project
+### Wikipedia clone using Django
+User can view, add and/or edit encyclopdia entries.
 
-### Project 0 / Google Search Clone 
-Design of a front-end for Google Search, Google Image Search, and Google Advanced Search.
+Requirements
+Django 3.0.8
+markdown2 2.3.9
 
-### Project 1 / Wiki Project
-Wikipedia clone using Django
