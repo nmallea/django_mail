@@ -1,0 +1,17 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {% if not content %}
+        ERROR
+    {% else %}
+        {{ link }}
+    {% endif %}
+{% endblock %}
+
+{% block nav %}
+    <a href="{% url 'edit' title %}">Edit Current Entry</a>
+{% endblock %}
+
+{% block body %}
+    {{ content|safe }}
+{% endblock %}
