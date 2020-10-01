@@ -1,7 +1,12 @@
 {% extends "mail/layout.html" %}
 
 {% block body %}
-
+    <nav class="nav nav-pills nav-fill">
+        <span class="nav-item nav-link disabled">
+            MegaMail
+        </span>
+    </nav>
+    <br>
     <h2>Login</h2>
 
     {% if message %}
@@ -11,14 +16,14 @@
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <div class="form-group">
-            <input autofocus class="form-control" type="email" name="email" placeholder="Email">
+            <input autofocus class="form-control" type="email" name="email" placeholder="Email" autocomplete="off">
         </div>
         <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
+            <input class="form-control" type="password" name="password" placeholder="Password" autocomplete="off">
         </div>
         <input class="btn btn-primary" type="submit" value="Login">
     </form>
-
+    <hr>
     Don't have an account? <a href="{% url 'register' %}">Register here.</a>
 
 {% endblock %}

@@ -2,19 +2,19 @@
 {% load static %}
 
 {% block body %}
-    <h2>{{ request.user.email }}</h2>
-    <!-- Main Navigation -->
-    <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
-    <button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
-    <button class="btn btn-sm btn-outline-primary" id="sent">Sent</button>
-    <button class="btn btn-sm btn-outline-primary" id="archived">Archived</button>
-    <a class="btn btn-sm btn-outline-primary" href="{% url 'logout' %}">Log Out</a>
+<nav class="nav nav-pills nav-fill">
+    <span class="nav-item nav-link disabled">
+        MegaMail -   {{ request.user.email }} 
+    </span>
+    <a class="nav-item nav-link" id="inbox" href="#">Inbox</a>
+    <a class="nav-item nav-link" id="compose" href="#">Compose</a>
+    <a class="nav-item nav-link" id="sent" href="#">Sent</a>
+    <a class="nav-item nav-link" id="archived" href="#">Archived</a>
+    <a class="nav-item nav-link" href="{% url 'logout' %}">Log Out</a>
+</nav>
     <hr>
-    <!-- Div for displaying error messages from the API and/or  -->
-    <!-- application level failures (for e.g. network)            -->
     <div id="view-error" class="alert alert-danger"></div>
     <div id="view-emails" class="list-group"></div>
-    <!-- Full email display -->
     <div id="view-read">
         <div><h3>View Email</h3></div>
         <div class="container card card-body">
@@ -30,7 +30,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
-                    <span class="badge badge-info badge-pill" id="timestamp"></span>
+                    <span class="badge badge-primary badge-pill" id="timestamp"></span>
                 </div>
             </div>
             <hr/>
@@ -41,9 +41,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="input-group">
-                        <!-- Dataset values are set when this div loads    -->
-                        <!-- and are used to enable reply and archive.     -->
-                        <button class="btn btn-sm btn-success" id="read-reply" data-email="">Reply</button>
+                        <button class="btn btn-sm btn-primary" id="read-reply" data-email="">Reply</button>
                         <button class="btn btn-sm btn-secondary ml-2" id="read-archive" data-email=""
                                 data-archived=""></button>
                     </div>
@@ -53,26 +51,24 @@
         <p>&nbsp;</p>
     </div>
     <div id="view-compose">
-        <div id="compose-title"><h3>New Email</h3></div>
+        <div id="compose-title"><h3>Compose New Email</h3></div>
         <form id="compose-form">
             <div class="form-group">
                 <input disabled class="form-control" value="{{ request.user.email }}">
             </div>
-            <!-- This form uses Bootstraps class=invalid-feedback to show validation errors -->
             <div class="form-group">
-                <strong>Recipients: </strong><small>At least one recipient required, for multiples use commas.</small>
+                <strong>To: </strong><small>For multiple recipients  use commas after each email</small>
                 <input id="form-recipients" class="form-control">
-                <div class="invalid-feedback font-weight-bold" id="recipients-alert">Please include at least one
-                    recipient.
+                <div class="invalid-feedback font-weight-bold" id="recipients-alert">Required
                 </div>
             </div>
             <div class="form-group">
-                <strong>Subject:</strong> <small>Please include a subject.</small>
+                <strong>Subject:</strong> <small>Subject line required</small>
                 <input class="form-control" id="form-subject" maxlength="255">
             </div>
-            <strong>Email:</strong> <small>Write the body of the email.</small>
+            <strong>Email Text:</strong> <small></small>
             <textarea class="form-control" id="form-body"></textarea>
-            <input type="submit" class="btn btn-sm btn-success my-2"/>
+            <input type="submit" class="btn btn-sm btn-primary my-2" value="SEND"/>
         </form>
         <p>&nbsp;</p>
     </div>

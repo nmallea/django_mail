@@ -24,12 +24,9 @@ def index(request):
 @csrf_exempt
 @login_required
 def compose(request):
-
-    # Composing a new email must be via POST
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
 
-    # Check recipient emails
     data = json.loads(request.body)
     emails = [email.strip() for email in data.get("recipients").split(",")]
     if not emails:
@@ -37,7 +34,6 @@ def compose(request):
             "error": "At least one recipient required."
         }, status=400)
 
-    # Convert email addresses to users
     recipients = []
     for email in emails:
         try:
@@ -48,11 +44,9 @@ def compose(request):
                 "error": f"User with email {email} does not exist."
             }, status=400)
 
-    # Get contents of email
     subject = data.get("subject", "")
     body = data.get("body", "")
 
-    # Create one email for each recipient, plus sender
     users = set()
     users.add(request.user)
     users.update(recipients)
@@ -75,7 +69,6 @@ def compose(request):
 @login_required
 def mailbox(request, mailbox):
 
-    # Filter emails returned based on mailbox
     if mailbox == "inbox":
         emails = Email.objects.filter(
             user=request.user, recipients=request.user, archived=False
@@ -91,7 +84,6 @@ def mailbox(request, mailbox):
     else:
         return JsonResponse({"error": "Invalid mailbox."}, status=400)
 
-    # Return emails in reverse chronologial order
     emails = emails.order_by("-timestamp").all()
     return JsonResponse([email.serialize() for email in emails], safe=False)
 
@@ -100,17 +92,14 @@ def mailbox(request, mailbox):
 @login_required
 def email(request, email_id):
 
-    # Query for requested email
     try:
         email = Email.objects.get(user=request.user, pk=email_id)
     except Email.DoesNotExist:
         return JsonResponse({"error": "Email not found."}, status=404)
 
-    # Return email contents
     if request.method == "GET":
         return JsonResponse(email.serialize())
 
-    # Update whether email is read or should be archived
     elif request.method == "PUT":
         data = json.loads(request.body)
         if data.get("read") is not None:
@@ -120,7 +109,6 @@ def email(request, email_id):
         email.save()
         return HttpResponse(status=204)
 
-    # Email must be via GET or PUT
     else:
         return JsonResponse({
             "error": "GET or PUT request required."
@@ -130,12 +118,10 @@ def email(request, email_id):
 def login_view(request):
     if request.method == "POST":
 
-        # Attempt to sign user in
         email = request.POST["email"]
         password = request.POST["password"]
         user = authenticate(request, username=email, password=password)
 
-        # Check if authentication successful
         if user is not None:
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
@@ -156,7 +142,6 @@ def register(request):
     if request.method == "POST":
         email = request.POST["email"]
 
-        # Ensure password matches confirmation
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
@@ -164,7 +149,6 @@ def register(request):
                 "message": "Passwords must match."
             })
 
-        # Attempt to create new user
         try:
             user = User.objects.create_user(email, email, password)
             user.save()
