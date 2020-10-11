@@ -1,7 +1,3 @@
-# Harvard CS50
+# Harvard CS50 / Project 3 / Mail
 
-### Project 0 / Google Search Clone 
-Design of a front-end for Google Search, Google Image Search, and Google Advanced Search.
-
-### Project 1 / Wiki Project
-Wikipedia clone using Django
+A front-end for an email client that makes API calls to send and receive emails.
